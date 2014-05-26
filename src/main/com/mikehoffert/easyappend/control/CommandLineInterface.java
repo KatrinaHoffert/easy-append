@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * A command line interface for interacting with the control classes.
+ */
 public class CommandLineInterface
 {
 	/**

@@ -1,5 +1,8 @@
 package com.mikehoffert.easyappend.control;
 
+/**
+ * A simple class for collecting information needed to add text to a file.
+ */
 public class TextAddition
 {
 	/**

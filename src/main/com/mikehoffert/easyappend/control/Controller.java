@@ -3,12 +3,14 @@ package com.mikehoffert.easyappend.control;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.mikehoffert.easyappend.model.BufferedFile;
 
+/**
+ * Provides interaction with the model classes.
+ */
 public class Controller
 {
 	/**

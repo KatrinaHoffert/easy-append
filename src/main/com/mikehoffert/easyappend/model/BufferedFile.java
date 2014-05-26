@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import com.google.common.io.CharStreams;
 
+/**
+ * Model class representing the file being modified. File content is not read
+ * until it is needed.
+ */
 public class BufferedFile
 {
 	/**
