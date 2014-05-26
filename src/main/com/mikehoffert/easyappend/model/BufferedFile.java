@@ -42,21 +42,37 @@ public class BufferedFile
 	}
 	
 	/**
-	 * Sets the text to be prepended. Set to null to not prepend any text.
+	 * Sets the text to be prepended. Prepending when there is already text
+	 * to prepend will append to that text. If passed <tt>null</tt>, will
+	 * not prepend anything.
 	 * @param prependText The text.
 	 */
 	public void setPrependText(String prependText)
 	{
-		this.prependText = prependText;
+		if(this.prependText != null && prependText != null)
+		{
+			this.prependText += "\n" + prependText;
+		}
+		else
+		{
+			this.prependText = prependText;
+		}
 	}
 
 	/**
-	 * Sets the text to be appended. Set to null to not append any text.
-	 * @param prependText The text.
+	 * Sets the text to be appended. Appending when there is already text
+	 * to append will append to that text. If passed <tt>null</tt>, will
+	 * not append anything.
+	 * @param appendText The text.
 	 */
 	public void setAppendText(String appendText)
 	{
 		this.appendText = appendText;
+	}
+	
+	public File getFile()
+	{
+		return file;
 	}
 	
 	/**
@@ -68,6 +84,7 @@ public class BufferedFile
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
 	 */
+	// TODO: A blank line is being inserted at the end of the file
 	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
