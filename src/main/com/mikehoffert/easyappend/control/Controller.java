@@ -46,7 +46,6 @@ public class Controller
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
 	 */
-	// TODO: Implement alternative path specification
 	public void writeFiles() throws FileNotFoundException, IOException
 	{
 		for(BufferedFile file : files)

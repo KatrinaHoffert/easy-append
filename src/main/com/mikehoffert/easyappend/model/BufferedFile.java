@@ -84,7 +84,6 @@ public class BufferedFile
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
 	 */
-	// TODO: A blank line is being inserted at the end of the file
 	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));

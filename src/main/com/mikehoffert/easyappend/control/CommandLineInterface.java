@@ -6,8 +6,20 @@ import java.io.IOException;
 
 public class CommandLineInterface
 {
+	/**
+	 * The controller used to interact with the system.
+	 */
 	private Controller controller = new Controller();
+	
+	/**
+	 * Keeps track of whether or not arguments are malformed.
+	 */
 	private boolean malformedArguments = false;
+	
+	/**
+	 * The exit status code that will be returned when the program exits. Non-zero
+	 * indictates an error has occured.
+	 */
 	private int exitStatus = 0;
 	
 	public static void main(String[] args)
@@ -18,6 +30,16 @@ public class CommandLineInterface
 		cli.exit();
 	}
 
+	/**
+	 * Parses the arguments supplied to the CLI and issues appropriate
+	 * commands based on these arguments.<p>
+	 * 
+	 * Arguments should be in the form: <tt>--prepend [--contains=&lt;regex&gt;
+	 * [--invert]] &lt;prepended text&gt; &lt;list of files&gt;</tt>. The
+	 * <tt>--prepend</tt> "blocks" may be replaced with <tt>--append</tt>. There
+	 * may be any number of these blocks (they will stack in order).
+	 * @param args Command line arguments.
+	 */
 	private void parseArguments(String[] args)
 	{
 		boolean filesOnly = false;
@@ -32,11 +54,13 @@ public class CommandLineInterface
 			{
 				i = createTextAddition(args, i, false);
 			}
-			else
+			else if(!filesOnly && args[i].equals("--"))
 			{
 				// Symbolizes that all further tokens must be file names
 				filesOnly = true;
-
+			}
+			else
+			{
 				controller.addFile(new File(args[i]));
 			}
 			
@@ -90,6 +114,9 @@ public class CommandLineInterface
 		return i;
 	}
 	
+	/**
+	 * Writes the files. Handles errors that may occur.
+	 */
 	private void writeFiles()
 	{
 		if(malformedArguments)
@@ -114,6 +141,9 @@ public class CommandLineInterface
 		}
 	}
 	
+	/**
+	 * Exits the program.
+	 */
 	private void exit()
 	{
 		System.exit(exitStatus);
