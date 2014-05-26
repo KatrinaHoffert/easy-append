@@ -1,8 +1,11 @@
-package com.mikehoffert.easyappend.control;
+package com.mikehoffert.easyappend.view;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import com.mikehoffert.easyappend.control.Controller;
+import com.mikehoffert.easyappend.control.TextAddition;
 
 /**
  * A command line interface for interacting with the control classes.
