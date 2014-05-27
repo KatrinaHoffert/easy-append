@@ -71,7 +71,14 @@ public class BufferedFile
 	 */
 	public void setAppendText(String appendText)
 	{
-		this.appendText = appendText;
+		if(this.appendText != null && appendText != null)
+		{
+			this.appendText += "\n" + appendText;
+		}
+		else
+		{
+			this.appendText = appendText;
+		}
 	}
 	
 	public File getFile()
@@ -97,7 +104,7 @@ public class BufferedFile
 		if(contents == null) contents = readFile();
 		writer.write(contents);
 
-		if(appendText != null) writer.write(appendText + "\n");
+		if(appendText != null) writer.write("\n" + appendText);
 		
 		writer.close();
 	}
@@ -138,6 +145,7 @@ public class BufferedFile
 			allLines += line + "\n";
 		}
 		
-		return allLines.substring(0, allLines.length());
+		// No trailing new line
+		return allLines.substring(0, allLines.length() - 1);
 	}
 }
