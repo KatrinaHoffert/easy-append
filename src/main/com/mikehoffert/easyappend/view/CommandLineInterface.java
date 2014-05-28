@@ -25,9 +25,14 @@ public class CommandLineInterface
 	
 	/**
 	 * The exit status code that will be returned when the program exits. Non-zero
-	 * indictates an error has occured.
+	 * indictates an error has occurred.
 	 */
 	private int exitStatus = 0;
+	
+	/**
+	 * True if running a test and program shouldn't exit (even if error occurred).
+	 */
+	private static boolean testing = false;
 	
 	public static void main(String[] args)
 	{
@@ -35,6 +40,15 @@ public class CommandLineInterface
 		cli.parseArguments(args);
 		cli.writeFiles();
 		cli.exit();
+	}
+	
+	/**
+	 * Sets the CLI into testing mode.
+	 * @param testing Whether or not we're in testing mode.
+	 */
+	public static void setTesting(boolean testing)
+	{
+		CommandLineInterface.testing = testing;
 	}
 
 	/**
@@ -153,6 +167,6 @@ public class CommandLineInterface
 	 */
 	private void exit()
 	{
-		System.exit(exitStatus);
+		if(!testing) System.exit(exitStatus);
 	}
 }
