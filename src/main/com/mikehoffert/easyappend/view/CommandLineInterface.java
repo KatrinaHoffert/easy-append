@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.mikehoffert.easyappend.control.Controller;
 import com.mikehoffert.easyappend.control.TextAddition;
+import com.mikehoffert.easyappend.model.BufferedFile;
 
 /**
  * A command line interface for interacting with the control classes.
@@ -67,7 +68,7 @@ public class CommandLineInterface
 			}
 			else
 			{
-				controller.addFile(new File(args[i]));
+				controller.addFile(new BufferedFile(new File(args[i])));
 			}
 			
 			if(malformedArguments)

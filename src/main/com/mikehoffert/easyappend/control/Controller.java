@@ -27,9 +27,9 @@ public class Controller
 	 * Adds a new file to the list of files to (potentially) modify.
 	 * @param file The file to add.
 	 */
-	public void addFile(File file)
+	public void addFile(BufferedFile file)
 	{
-		files.add(new BufferedFile(file));
+		files.add(file);
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class Controller
 				if(addition.getContains() != null)
 				{
 					boolean contains = file.contains(addition.getContains());
-					applyChange = contains && !addition.isInverted();
+					applyChange = contains ^ addition.isInverted();
 				}
 				
 				if(applyChange)
