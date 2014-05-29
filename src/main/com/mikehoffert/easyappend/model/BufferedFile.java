@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.common.io.CharStreams;
+import com.mikehoffert.easyappend.control.Observer;
 
 /**
  * Model class representing the file being modified. File content is not read
@@ -95,7 +96,7 @@ public class BufferedFile
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
 	 */
-	public void write(File outputFile) throws FileNotFoundException, IOException
+	public void write(File outputFile, List<Observer> observers) throws FileNotFoundException, IOException
 	{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
 		
@@ -105,6 +106,14 @@ public class BufferedFile
 		writer.write(contents);
 
 		if(appendText != null) writer.write("\n" + appendText);
+		
+		if(observers != null)
+		{
+			for(Observer observer : observers)
+			{
+				observer.message("  File written");
+			}
+		}
 		
 		writer.close();
 	}
@@ -147,5 +156,11 @@ public class BufferedFile
 		
 		// No trailing new line
 		return allLines.substring(0, allLines.length() - 1);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return file.toString();
 	}
 }

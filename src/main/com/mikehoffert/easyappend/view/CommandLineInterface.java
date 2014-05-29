@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import com.mikehoffert.easyappend.control.Controller;
+import com.mikehoffert.easyappend.control.Observer;
 import com.mikehoffert.easyappend.control.TextAddition;
 import com.mikehoffert.easyappend.model.BufferedFile;
 
 /**
  * A command line interface for interacting with the control classes.
  */
-public class CommandLineInterface
+public class CommandLineInterface implements Observer
 {
 	/**
 	 * The controller used to interact with the system.
@@ -40,6 +41,11 @@ public class CommandLineInterface
 		cli.parseArguments(args);
 		cli.writeFiles();
 		cli.exit();
+	}
+	
+	public CommandLineInterface()
+	{
+		controller.attach(this);
 	}
 	
 	/**
@@ -105,7 +111,7 @@ public class CommandLineInterface
 	private int createTextAddition(String[] args, int i, boolean prepend)
 	{
 		String text = null;
-		String contains = "";
+		String contains = null;
 		boolean inverted = false;
 		
 		// Determine what other arguments are set for this block
@@ -168,5 +174,11 @@ public class CommandLineInterface
 	private void exit()
 	{
 		if(!testing) System.exit(exitStatus);
+	}
+
+	@Override
+	public void message(Object message)
+	{
+		System.out.println(message);
 	}
 }
