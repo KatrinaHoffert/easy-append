@@ -102,7 +102,7 @@ public class BufferedFile
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
 	 */
-	public void write(File outputFile, List<Observer> observers) throws FileNotFoundException, IOException
+	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
 		FileOutputStream fos = FileUtils.openOutputStream(outputFile);
 		OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -114,14 +114,6 @@ public class BufferedFile
 		writer.write(contents);
 
 		if(appendText != null) writer.write("\n" + appendText);
-		
-		if(observers != null)
-		{
-			for(Observer observer : observers)
-			{
-				observer.message(new Message("File written", 1));
-			}
-		}
 		
 		writer.close();
 	}

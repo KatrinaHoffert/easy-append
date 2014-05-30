@@ -155,7 +155,9 @@ public class Controller implements Observable
 		
 			File outputFile = determineFileLocation(file.getFile(), commonPath, location);
 			messageAllObservers("File will be written to: " + outputFile.toString(), 1);
-			if(!dryRun) file.write(outputFile, observers);
+			if(!dryRun) file.write(outputFile);
+			
+			messageAllObservers("File written.", 1);
 		}
 	}
 	
