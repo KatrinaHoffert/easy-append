@@ -29,6 +29,11 @@ public class Controller implements Observable
 	private List<Observer> observers = new ArrayList<>();
 	
 	/**
+	 * If true, does everything *except* write the files.
+	 */
+	private boolean dryRun = false;
+	
+	/**
 	 * Adds a new file to the list of files to (potentially) modify.
 	 * @param file The file to add.
 	 */
@@ -51,6 +56,15 @@ public class Controller implements Observable
 	public void attach(Observer observer)
 	{
 		observers.add(observer);
+	}
+	
+	/**
+	 * Sets whether or not to perform a dry run, which will not write the files.
+	 * @param dryRun True if a dry run.
+	 */
+	public void setDryRun(boolean dryRun)
+	{
+		this.dryRun = dryRun;
 	}
 	
 	/**
@@ -115,7 +129,7 @@ public class Controller implements Observable
 				}
 			}
 		
-			file.write(file.getFile(), observers);
+			if(!dryRun) file.write(file.getFile(), observers);
 		}
 	}
 }

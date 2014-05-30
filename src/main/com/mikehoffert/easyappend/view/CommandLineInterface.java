@@ -81,6 +81,10 @@ public class CommandLineInterface implements Observer
 			{
 				i = createTextAddition(args, i, false);
 			}
+			else if(!filesOnly && args[i].equals("--dry-run"))
+			{
+				controller.setDryRun(true);
+			}
 			else if(!filesOnly && args[i].equals("--"))
 			{
 				// Symbolizes that all further tokens must be file names
