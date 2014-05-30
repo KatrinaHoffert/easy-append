@@ -4,9 +4,13 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import org.apache.commons.io.FileUtils;
 
 import com.google.common.io.CharStreams;
 import com.mikehoffert.easyappend.control.Message;
@@ -100,7 +104,9 @@ public class BufferedFile
 	 */
 	public void write(File outputFile, List<Observer> observers) throws FileNotFoundException, IOException
 	{
-		BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
+		FileOutputStream fos = FileUtils.openOutputStream(outputFile);
+		OutputStreamWriter osw = new OutputStreamWriter(fos);
+		BufferedWriter writer = new BufferedWriter(osw);
 		
 		if(prependText != null) writer.write(prependText + "\n");
 		

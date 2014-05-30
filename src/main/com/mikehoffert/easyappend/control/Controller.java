@@ -258,9 +258,9 @@ public class Controller implements Observable
 		}
 		else
 		{
-			Path root = file.toPath().getRoot();
+			Path root = file.getCanonicalFile().toPath().getRoot();
 			String rootName = root.toString().substring(0, 1).toLowerCase();
-			Path relativeFromRoot = root.relativize(file.toPath());
+			Path relativeFromRoot = root.relativize(file.toPath().toAbsolutePath());
 			relativeFromLocation = Paths.get(rootName).resolve(relativeFromRoot);
 		}
 		
