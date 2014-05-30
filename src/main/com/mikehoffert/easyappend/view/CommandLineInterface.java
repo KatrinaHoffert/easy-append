@@ -228,6 +228,9 @@ public class CommandLineInterface implements Observer
 		}
 		
 		System.out.println(text);
+		
+		// Exit, as `--help` cannot be combined with other arguments
+		exit();
 	}
 
 	@Override
