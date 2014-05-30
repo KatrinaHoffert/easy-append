@@ -93,6 +93,7 @@ public class BufferedFile
 	 * already exists at that location. The prepended and appended text
 	 * will be automatically added.
 	 * @param outputFile The file to output.
+	 * @param observers The observers to notify progress for.
 	 * @throws FileNotFoundException The file we're appending or prepending to
 	 * does not exist.
 	 * @throws IOException Could not write to the desired file.
@@ -155,8 +156,9 @@ public class BufferedFile
 			allLines += line + "\n";
 		}
 		
-		// No trailing new line
-		return allLines.substring(0, allLines.length() - 1);
+		// No trailing new line -- make sure that we read in content and that the
+		// file isn't just empty
+		return allLines.substring(0, (allLines.length() > 0 ? allLines.length() - 1 : 0));
 	}
 	
 	@Override

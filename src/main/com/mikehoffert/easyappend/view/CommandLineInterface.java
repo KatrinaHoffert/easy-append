@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import com.mikehoffert.easyappend.control.Controller;
@@ -109,6 +110,19 @@ public class CommandLineInterface implements Observer
 			else if(!filesOnly && (args[i].equals("--verbose") || args[i].equals("-v")))
 			{
 				verbose = true;
+			}
+			else if(!filesOnly && args[i].startsWith("--location"))
+			{
+				String[] locationString = args[i].split("=");
+				
+				if(locationString.length > 0)
+				{
+					controller.setLocation(Paths.get(locationString[1]));
+				}
+				else
+				{
+					malformedArguments = true;
+				}
 			}
 			else if(!filesOnly && (args[i].equals("--help") || args[i].equals("-h")))
 			{
