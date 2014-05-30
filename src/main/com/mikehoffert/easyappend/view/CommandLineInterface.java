@@ -106,11 +106,11 @@ public class CommandLineInterface implements Observer
 				controller.setDryRun(true);
 				verbose = true;
 			}
-			else if(!filesOnly && args[i].equals("--verbose"))
+			else if(!filesOnly && (args[i].equals("--verbose") || args[i].equals("-v")))
 			{
 				verbose = true;
 			}
-			else if(!filesOnly && args[i].equals("--help"))
+			else if(!filesOnly && (args[i].equals("--help") || args[i].equals("-h")))
 			{
 				displayHelp();
 			}
