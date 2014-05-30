@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Scanner;
 
 import com.mikehoffert.easyappend.control.Controller;
 import com.mikehoffert.easyappend.control.Message;
@@ -16,6 +17,8 @@ import com.mikehoffert.easyappend.model.BufferedFile;
  */
 public class CommandLineInterface implements Observer
 {
+	private static final int LINE_WIDTH = 80;
+	
 	/**
 	 * The controller used to interact with the system.
 	 */
@@ -107,6 +110,10 @@ public class CommandLineInterface implements Observer
 			{
 				verbose = true;
 			}
+			else if(!filesOnly && args[i].equals("--help"))
+			{
+				displayHelp();
+			}
 			else if(!filesOnly && args[i].equals("--"))
 			{
 				// Symbolizes that all further tokens must be file names
@@ -174,6 +181,7 @@ public class CommandLineInterface implements Observer
 	{
 		if(malformedArguments)
 		{
+			displayHelp();
 			exitStatus = 1;
 			return;
 		}
@@ -201,13 +209,33 @@ public class CommandLineInterface implements Observer
 	{
 		if(!testing) System.exit(exitStatus);
 	}
+	
+	/**
+	 * Displays help on using the program.
+	 */
+	private void displayHelp()
+	{
+		// The help text content is located in a separate file, for ease of
+		// formatting and modification.
+		String text = "";
+		try(Scanner scanner = new Scanner(new File("resource/help_text.txt")))
+		{
+			while(scanner.hasNextLine()) text += scanner.nextLine() + "\n";
+		}
+		catch(FileNotFoundException e)
+		{
+			System.err.println("Couldn't open the help file. Something is horribly wrong.");
+		}
+		
+		System.out.println(text);
+	}
 
 	@Override
 	public void message(Message message)
 	{
 		if(verbose)
 		{
-			String output = TextWrapper.forWidth(80).hard()
+			String output = TextWrapper.forWidth(LINE_WIDTH).hard()
 					.setIndentLevel(message.getLevel() * 3).wrap(message.getMessage());
 			System.out.println(output);
 		}

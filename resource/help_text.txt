@@ -1,0 +1,62 @@
+Easy append: simple and fast bulk text additions
+
+    Usage: --prepend [--contains=<regex> [--invert]] <text to add> <files>
+
+The `--prepend` may be replaced by `--append`, which will append text instead of
+prepending. There may be any number of these "text additions". The order that
+the additions appear is significant as additions will stack with any existing
+ones.
+
+Arguments:
+----------
+
+These text additions appear as "block" of command line arguments. The order is
+significant. The type of addition (prepend or append) must come first, followed
+by an optional `--contains` followed by an optional `--invert`. The following
+flags can appear in text addition blocks. Only `--prepend` or `--append` is
+necesary, and the rest are optional. Note the text that is being added follows
+all the flags for the block.
+
+  --prepend   Prepends text to the beginning of files.
+
+  --contains  In the form of `--contains=<regex>`, where regex is a regular
+              expression that must be matched in the file to perform the text
+              addition. If no match is found, the addition is not performed on
+              that file (useful for adding text iff the file does not already
+              contain the text).
+
+  --invert    If this flag is present, the regex is inverted and the file must
+              *not* contain the regex to have the text addition applied.
+
+The program also has several general options:
+
+  --verbose   Display additional information about the program's process.
+
+  --dry-run   Show what the program would do without any actual side effects.
+              If this is on, `--verbose` is implied.
+
+  --help      Displays this text.
+
+When an argument which is not one of these flags is encountered, it is presumed
+to be part of the list of files that we're performing text additions on. In
+which case, all further arguments will be considered to be files. If you have
+files with the same name as a flag, you can symbolize the start of the file list
+with `--` (everything after that argument is considered to be a file).
+
+Examples:
+---------
+
+To simply add some text to the end of the file without a conditional, we might
+use:
+
+    --append "foo" file1.txt file2.txt
+
+Which would append "foo" to the end of file1.txt and file2.txt.
+
+We could also create more complicated rules, like:
+
+    --prepend --contains="^foo$" --invert foo file.txt
+
+Which prepends "foo" to the file if it does not contain the line "foo" already.
+
+For more examples, see <https://github.com/MikeHoffert/easy-append>
