@@ -31,6 +31,11 @@ public class CommandLineInterface implements Observer
 	private int exitStatus = 0;
 	
 	/**
+	 * Whether or not to print out additional information.
+	 */
+	private boolean verbose = false;
+	
+	/**
 	 * True if running a test and program shouldn't exit (even if error occurred).
 	 */
 	private static boolean testing = false;
@@ -64,7 +69,17 @@ public class CommandLineInterface implements Observer
 	 * Arguments should be in the form: <tt>--prepend [--contains=&lt;regex&gt;
 	 * [--invert]] &lt;prepended text&gt; &lt;list of files&gt;</tt>. The
 	 * <tt>--prepend</tt> "blocks" may be replaced with <tt>--append</tt>. There
-	 * may be any number of these blocks (they will stack in order).
+	 * may be any number of these blocks (they will stack in order).<p>
+	 * 
+	 * As well, the <tt>--verbose</tt> flag will enable additional output about
+	 * what the program is (or will) be doing, such as what files are being
+	 * skipped and what files have been written so far. It will include output
+	 * for each file regarding the application of each text addition (which are
+	 * numbered in the order that they appear).<p>
+	 * 
+	 * The <tt>--dry-run</tt> flag will disable the writing of the files,
+	 * allowing you to see what the program will do without side effects. This
+	 * will automatically enable <tt>--verbose</tt>.
 	 * @param args Command line arguments.
 	 */
 	private void parseArguments(String[] args)
@@ -84,6 +99,11 @@ public class CommandLineInterface implements Observer
 			else if(!filesOnly && args[i].equals("--dry-run"))
 			{
 				controller.setDryRun(true);
+				verbose = true;
+			}
+			else if(!filesOnly && args[i].equals("--verbose"))
+			{
+				verbose = true;
 			}
 			else if(!filesOnly && args[i].equals("--"))
 			{
@@ -183,6 +203,6 @@ public class CommandLineInterface implements Observer
 	@Override
 	public void message(Object message)
 	{
-		System.out.println(message);
+		if(verbose) System.out.println(message);
 	}
 }

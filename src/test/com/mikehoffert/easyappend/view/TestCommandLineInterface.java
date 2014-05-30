@@ -57,6 +57,7 @@ public class TestCommandLineInterface
 			"appended1",
 			"--append",
 			"appended2",
+			"--verbose",
 			file1.toString(),
 			file2.toString()
 		};
