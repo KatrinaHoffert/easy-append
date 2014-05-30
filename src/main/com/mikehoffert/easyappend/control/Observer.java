@@ -11,5 +11,5 @@ public interface Observer
 	 * Used to send messages to the observer from the <tt>Observable</tt>.
 	 * @param message The message to send. The type is implementation defined.
 	 */
-	public void message(Object message);
+	public void message(Message message);
 }

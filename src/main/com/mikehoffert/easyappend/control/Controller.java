@@ -71,11 +71,11 @@ public class Controller implements Observable
 	 * Used to send messages to all observers with a single method.
 	 * @param message The message to send.
 	 */
-	private void messageAllObservers(String message)
+	private void messageAllObservers(String message, int level)
 	{
 		for(Observer observer : observers)
 		{
-			observer.message(message);
+			observer.message(new Message(message, level));
 		}
 	}
 	
@@ -89,13 +89,13 @@ public class Controller implements Observable
 	{
 		for(BufferedFile file : files)
 		{
-			messageAllObservers("Working on file " + file);
+			messageAllObservers("Working on file " + file, 0);
 			int counter = 0;
 			for(TextAddition addition : additions)
 			{
 				counter++;
-				messageAllObservers("  Evaluating text addition #" + counter +
-						" (" + (addition.isPrepend() ? "prepend" : "append") +  ")");
+				messageAllObservers("Evaluating text addition #" + counter +
+						" (" + (addition.isPrepend() ? "prepend" : "append") +  ")", 1);
 				
 				// Determine if the file contains any required regex
 				boolean applyChange = true;
@@ -104,13 +104,13 @@ public class Controller implements Observable
 					boolean contains = file.contains(addition.getContains());
 					applyChange = contains ^ addition.isInverted();
 					
-					messageAllObservers("    File " + (contains ? "does" : "does not") +
-							" contain the regex.");
+					messageAllObservers("File " + (contains ? "does" : "does not") +
+							" contain the regex.", 2);
 					
 					if(!applyChange)
 					{
-						messageAllObservers("    Skipping because regex should" +
-								(addition.isInverted() ? " not" : "") + " be matched.");
+						messageAllObservers("Skipping because regex should" +
+								(addition.isInverted() ? " not" : "") + " be matched.", 2);
 					}
 				}
 				
@@ -119,12 +119,12 @@ public class Controller implements Observable
 					if(addition.isPrepend())
 					{
 						file.setPrependText(addition.getText());
-						messageAllObservers("    Text will be prepended.");
+						messageAllObservers("Text will be prepended.", 2);
 					}
 					else
 					{
 						file.setAppendText(addition.getText());
-						messageAllObservers("    Text will be appended.");
+						messageAllObservers("Text will be appended.", 2);
 					}
 				}
 			}

@@ -3,8 +3,10 @@ package com.mikehoffert.easyappend.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import com.mikehoffert.easyappend.control.Controller;
+import com.mikehoffert.easyappend.control.Message;
 import com.mikehoffert.easyappend.control.Observer;
 import com.mikehoffert.easyappend.control.TextAddition;
 import com.mikehoffert.easyappend.model.BufferedFile;
@@ -201,8 +203,13 @@ public class CommandLineInterface implements Observer
 	}
 
 	@Override
-	public void message(Object message)
+	public void message(Message message)
 	{
-		if(verbose) System.out.println(message);
+		if(verbose)
+		{
+			String output = TextWrapper.forWidth(80).hard()
+					.setIndentLevel(message.getLevel() * 3).wrap(message.getMessage());
+			System.out.println(output);
+		}
 	}
 }

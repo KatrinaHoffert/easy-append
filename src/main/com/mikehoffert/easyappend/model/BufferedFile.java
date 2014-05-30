@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.common.io.CharStreams;
+import com.mikehoffert.easyappend.control.Message;
 import com.mikehoffert.easyappend.control.Observer;
 
 /**
@@ -111,7 +112,7 @@ public class BufferedFile
 		{
 			for(Observer observer : observers)
 			{
-				observer.message("  File written");
+				observer.message(new Message("File written", 1));
 			}
 		}
 		
