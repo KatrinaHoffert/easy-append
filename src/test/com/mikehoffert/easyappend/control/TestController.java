@@ -2,8 +2,10 @@ package com.mikehoffert.easyappend.control;
 
 import static org.mockito.Mockito.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,11 +45,14 @@ public class TestController
 	@Test
 	public void testWriteFiles() throws FileNotFoundException, IOException
 	{
-		Controller controller = new Controller();
+		Controller controller = spy(new Controller());
 		controller.addFile(file1);
 		controller.addFile(file2);
 		controller.addText(prepend);
 		controller.addText(append);
+		
+		when(file1.getFile()).thenReturn(new File("test1"));
+		when(file2.getFile()).thenReturn(new File("test2"));
 		
 		controller.writeFiles();
 		
