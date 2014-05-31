@@ -64,8 +64,8 @@ These commands can be in any order.
                  overwritten. Use in the format `--location=<path>`.
 
 * `--charset` - Use as `charset=<encoding>`, where encoding is a string for the
-                particular encoding as described on <http://docs.oracle.com/
-                javase/8/docs/technotes/guides/intl/encoding.doc.html>. If not
+                particular encoding as described on http://docs.oracle.com/
+                javase/8/docs/technotes/guides/intl/encoding.doc.html. If not
                 specified, the default is UTF-8. Needs to be specified before
                 any text additions that read from files.
 
