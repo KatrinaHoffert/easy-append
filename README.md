@@ -22,7 +22,7 @@ quotes are not part of the syntax, but rather part of the shell (and allow us
 to include whitespace in our arguments.
 
 The full list of available arguments in text additions are (in the order that
-they must appear):
+they must appear). All except the `--prepend`/`--append` are optional.
 
 * `--prepend` - Prepends text to the beginning of files.
 
@@ -43,6 +43,8 @@ they must appear):
              `--file` or `<text to add>` (at the end of the block) may appear.
 
 ##Program options
+
+These commands can be in any order.
 
 * `--verbose` - Display additional information about the program's process.
 
@@ -65,3 +67,106 @@ they must appear):
 
 Coming soon. For now, the project requires Eclipse, Maven, and Eclipse's m2e
 plugin to be run.
+
+##Examples
+
+Prepend and append plain some text to files:
+
+```bash
+--prepend "prepended text" --append "appended text" file1.txt file2.txt
+```
+
+Prepend text if there is a line containing just a number:
+
+```bash
+--prepend --contains="^[0-9]+$" "prepended text" file.txt
+```
+
+The inverse of above (prepending if there is no such line):
+
+```bash
+--prepend --contains="^[0-9]+$" --invert "prepended text" file.txt
+```
+
+Multiple text additions stack. So if we have a file, `file.txt`, that contains:
+
+```
+A
+B
+C
+```
+
+And run the following command on it:
+
+```bash
+--prepend "1" --prepend "2" --prepend "3" file.txt
+```
+
+Then the file content would become:
+
+```
+1
+2
+3
+A
+B
+C
+```
+
+We could obtain the text to be added from a file instead of specifying it as an
+argument. Helpful for large amounts of text:
+
+```bash
+--prepend --file=prepend_text.txt file.txt
+```
+
+Also useful is the ability to specify a location to save the output files. If
+this alternative location is not specified, the original files will be
+overwritten. Directories are created in an intelligent manner to ensure that
+there will not be any conflicts amongst the files. This is useful for previewing
+your changes without overwriting the original files.
+
+In this example, we will also be using absolute paths to demonstrate the folder
+structure created.
+
+Assume that we have the following files that we want to make additions to:
+
+```
+C:\a\b\file.txt
+C:\a\file.txt
+F:\a\file.txt
+```
+
+We could modify these and tell Easy Append to place the output in `C:\output`
+with:
+
+```bash
+--location="C:\output" --prepend "X" C:\a\b\file.txt C:\a\file.txt F:\a\file.txt
+```
+
+After running this, the contents of `C:\output` will be:
+
+```
+C:\output\c\a\b\file.txt
+C:\output\c\a\file.txt
+C:\output\f\a\file.txt
+```
+
+On the other hand, suppose that we only were making additions to the following
+files:
+
+```
+C:\a\b\file.txt
+C:\a\file.txt
+```
+
+In which case, the similar command would cause the contents of `C:\output` to
+be:
+
+```
+C:\output\b\file.txt
+C:\output\file.txt
+```
+
+As we can see, the program determines the minimum number of directories we need
+to ensure there is no ambiguity.
