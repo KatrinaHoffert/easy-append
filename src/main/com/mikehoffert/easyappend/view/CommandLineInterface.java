@@ -147,6 +147,15 @@ public class CommandLineInterface implements Observer
 				// Symbolizes that all further tokens must be file names
 				filesOnly = true;
 			}
+			// If this is encountered, there must be some argument that is in
+			// the form of a flag, but is not a valid flag. In which case, we
+			// assume that the arguments are malformed. Files that have names
+			// like flags need to be separated from the flags with a `--`. This
+			// is a security feature to prevent typos from globbing files.
+			else if(!filesOnly && args[i].startsWith("--"))
+			{
+				malformedArguments = true;
+			}
 			else
 			{
 				File file = new File(args[i]);
@@ -185,7 +194,6 @@ public class CommandLineInterface implements Observer
 			
 			if(malformedArguments)
 			{
-				System.err.println("Invalid arguments.");
 				break;
 			}
 		}
@@ -264,6 +272,7 @@ public class CommandLineInterface implements Observer
 	{
 		if(malformedArguments)
 		{
+			System.err.println("Invalid arguments.\n");
 			displayHelp();
 			exitStatus = 1;
 			return;
