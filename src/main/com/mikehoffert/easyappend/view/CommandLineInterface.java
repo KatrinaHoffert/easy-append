@@ -104,11 +104,7 @@ public class CommandLineInterface implements Observer
 		
 		for(int i = 0; i < args.length; i++)
 		{
-			if(!filesOnly && args[i].equals("--prepend"))
-			{
-				i = createTextAddition(args, i, true);
-			}
-			else if(!filesOnly && args[i].equals("--append"))
+			if(!filesOnly && args[i].equals("--append"))
 			{
 				i = createTextAddition(args, i, false);
 			}
@@ -117,9 +113,9 @@ public class CommandLineInterface implements Observer
 				controller.setDryRun(true);
 				verbose = true;
 			}
-			else if(!filesOnly && (args[i].equals("--verbose") || args[i].equals("-v")))
+			else if(!filesOnly && (args[i].equals("--help") || args[i].equals("-h")))
 			{
-				verbose = true;
+				displayHelp();
 			}
 			else if(!filesOnly && args[i].startsWith("--location"))
 			{
@@ -134,13 +130,17 @@ public class CommandLineInterface implements Observer
 					malformedArguments = true;
 				}
 			}
-			else if(!filesOnly && (args[i].equals("--help") || args[i].equals("-h")))
+			else if(!filesOnly && args[i].equals("--prepend"))
 			{
-				displayHelp();
+				i = createTextAddition(args, i, true);
 			}
 			else if(!filesOnly && (args[i].equals("--recursive") || args[i].equals("-r")))
 			{
 				recursiveMode = true;
+			}
+			else if(!filesOnly && (args[i].equals("--verbose") || args[i].equals("-v")))
+			{
+				verbose = true;
 			}
 			else if(!filesOnly && args[i].equals("--"))
 			{
