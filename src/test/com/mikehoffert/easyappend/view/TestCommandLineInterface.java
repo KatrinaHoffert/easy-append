@@ -29,7 +29,7 @@ public class TestCommandLineInterface
 		FileWriter writer = new FileWriter(file1);
 		writer.write("A\n");
 		writer.write("B\n");
-		writer.write("C\n");
+		writer.write("C");
 		writer.close();
 		
 		file2 = folder.newFile();
@@ -37,7 +37,7 @@ public class TestCommandLineInterface
 		writer = new FileWriter(file2);
 		writer.write("D\n");
 		writer.write("E\n");
-		writer.write("F\n");
+		writer.write("F");
 		writer.close();
 	}
 	
