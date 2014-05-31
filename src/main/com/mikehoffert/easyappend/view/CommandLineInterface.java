@@ -109,6 +109,12 @@ public class CommandLineInterface implements Observer
 	 */
 	private void parseArguments(String[] args)
 	{
+		if(args.length == 0)
+		{
+			displayHelp();
+			exit();
+		}
+		
 		boolean filesOnly = false;
 		
 		for(int i = 0; i < args.length; i++)
