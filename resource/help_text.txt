@@ -4,20 +4,21 @@ Easy append: simple and fast bulk text additions
 
 The `--prepend` may be replaced by `--append`, which will append text instead of
 prepending. There may be any number of these "text additions". The order that
-the additions appear is significant as additions will stack with any existing
+the additions appear is significant, as additions will stack with any existing
 ones.
 
 Arguments:
 ----------
 
-These text additions appear as "block" of command line arguments. The order is
-significant. The type of addition (prepend or append) must come first, followed
-by an optional `--contains` followed by an optional `--invert`. The following
-flags can appear in text addition blocks. Only `--prepend` or `--append` is
-necesary, and the rest are optional. Note the text that is being added follows
-all the flags for the block.
+These text additions appear as "blocks" of command line arguments. They must
+appear in the order shown below. Only `--prepend` or `--append` is necesary, and
+the rest are optional. Note the text that is being added follows all the flags
+for the block (unless `--file` is used).
 
   --prepend   Prepends text to the beginning of files.
+
+  --append    Appends text to the end of files. Only one of either `--prepend`
+              or `--append` may appear.
 
   --contains  In the form of `--contains=<regex>`, where regex is a regular
               expression that must be matched in the file to perform the text
@@ -28,6 +29,10 @@ all the flags for the block.
   --invert    If this flag is present, the regex is inverted and the file must
               *not* contain the regex to have the text addition applied.
 
+  --file      In the form of `--file=<path>`, where path is the path to some
+              file that contains the text for this text addition. Only one of
+              `--file` or `<text to add>` (at the end of the block) may appear.
+
 The program also has several general options:
 
   --verbose   Display additional information about the program's process.
@@ -36,6 +41,16 @@ The program also has several general options:
               If this is on, `--verbose` is implied.
 
   --help      Displays this text.
+
+  --recursive If enabled, including a directory in the file list will result in
+              all files inside that directory (and in sub directories) being
+              added.
+
+  --location  Allows written files to be placed in an alternative location
+              instead of overwriting the originals. To prevent conflicts, some
+              folders will be retained in the new location. Note that if files
+              exist in this alternative location, they may be overwritten. Use
+              in the format `--location=<path>`.
 
 When an argument which is not one of these flags is encountered, it is presumed
 to be part of the list of files that we're performing text additions on. In
