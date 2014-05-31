@@ -1,20 +1,15 @@
 package com.mikehoffert.easyappend.model;
 
-import java.util.List;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import org.apache.commons.io.FileUtils;
 
-import com.google.common.io.CharStreams;
-import com.mikehoffert.easyappend.control.Message;
-import com.mikehoffert.easyappend.control.Observer;
+import com.google.common.base.Charsets;
 
 /**
  * Model class representing the file being modified. File content is not read
@@ -104,7 +99,7 @@ public class BufferedFile
 	 */
 	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
-		if(contents == null) contents = FileUtils.readFileToString(file);
+		if(contents == null) contents = FileUtils.readFileToString(file, Charsets.UTF_8);
 		
 		FileOutputStream fos = FileUtils.openOutputStream(outputFile);
 		OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -130,7 +125,7 @@ public class BufferedFile
 	 */
 	public boolean contains(String regex) throws FileNotFoundException, IOException
 	{
-		if(contents == null) contents = FileUtils.readFileToString(file);
+		if(contents == null) contents = FileUtils.readFileToString(file, Charsets.UTF_8);
 
 		// We don't need a complete match, so there may be any text on either
 		// side of the regex. The (?m) enables multi-line mode (so that `^` and

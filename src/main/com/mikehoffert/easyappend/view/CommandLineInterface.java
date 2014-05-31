@@ -3,10 +3,12 @@ package com.mikehoffert.easyappend.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import org.apache.commons.io.FileUtils;
+
+import com.google.common.base.Charsets;
 import com.mikehoffert.easyappend.control.Controller;
 import com.mikehoffert.easyappend.control.Message;
 import com.mikehoffert.easyappend.control.Observer;
@@ -160,11 +162,14 @@ public class CommandLineInterface implements Observer
 		String text = null;
 		String contains = null;
 		boolean inverted = false;
+		String textAdditionFile = null;
 		
 		// Determine what other arguments are set for this block
 		if(i + 1 < args.length && args[i + 1].startsWith("--contains"))
 		{
 			// Everything after the equals sign
+			// TODO: Use conditional here so that exception isn't thrown if
+			// the arguments are malformed
 			contains = args[++i].split("=")[1];
 		}
 		
@@ -174,9 +179,30 @@ public class CommandLineInterface implements Observer
 			i++;
 		}
 		
-		if(i + 1 < args.length)
+		if(i + 1 < args.length && args[i + 1].startsWith("--file"))
+		{
+			// Everything after the equals sign
+			textAdditionFile = args[++i].split("=")[1];
+		}
+		
+		// Only read in the text if a file was not specified
+		if(textAdditionFile == null && i + 1 < args.length)
 		{
 			text = args[++i];
+		}
+		// File was specified -- read it in as the text.
+		else if(textAdditionFile != null)
+		{
+			try
+			{
+				text = FileUtils.readFileToString(new File(textAdditionFile), Charsets.UTF_8);
+			}
+			catch(IOException e)
+			{
+				System.err.println("One or more of the files contain text additions " +
+						"could not be opened.");
+				exitStatus = 4;
+			}
 		}
 		else
 		{
