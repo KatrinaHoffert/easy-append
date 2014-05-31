@@ -38,7 +38,12 @@ public class TestBufferedFile
 		FileWriter writer = new FileWriter(testFile);
 		
 		// Write all but the first and last line
-		for(int i = 1; i < content.length - 1; i++) writer.write(content[i] + "\n");
+		for(int i = 1; i < content.length - 1; i++)
+		{
+			writer.write(content[i]);
+			// Don't include new line on last line
+			if(i < content.length - 2) writer.write("\n");
+		}
 		writer.close();
 	}
 	
@@ -69,7 +74,7 @@ public class TestBufferedFile
 		
 		List<String> lines = CharStreams.readLines(new FileReader(output));
 		
-		for(int i = 1; i < content.length; i++) assertEquals(lines.get(i - 1), content[i]);
+		for(int i = 1; i < content.length; i++) assertEquals(content[i], lines.get(i - 1));
 	}
 	
 	@Test
@@ -86,7 +91,7 @@ public class TestBufferedFile
 		
 		List<String> lines = CharStreams.readLines(new FileReader(output));
 		
-		for(int i = 0; i < content.length; i++) assertEquals(lines.get(i), content[i]);
+		for(int i = 0; i < content.length; i++) assertEquals(content[i], lines.get(i));
 	}
 	
 	@Test

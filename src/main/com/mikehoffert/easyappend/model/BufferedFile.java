@@ -6,10 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
-
-import com.google.common.base.Charsets;
 
 /**
  * Model class representing the file being modified. File content is not read
@@ -38,12 +37,26 @@ public class BufferedFile
 	private String contents;
 	
 	/**
+	 * Charset the file is assume to use.
+	 */
+	private Charset charset;
+	
+	/**
 	 * Initializes the buffered file.
 	 * @param file The file being modified.
 	 */
 	public BufferedFile(File file)
 	{
 		this.file = file;
+	}
+	
+	/**
+	 * Sets the charset (encoding) of the file.
+	 * @param charset The charset to use.
+	 */
+	public void setCharset(Charset charset)
+	{
+		this.charset = charset;
 	}
 	
 	/**
@@ -99,7 +112,7 @@ public class BufferedFile
 	 */
 	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
-		if(contents == null) contents = FileUtils.readFileToString(file, Charsets.UTF_8);
+		if(contents == null) contents = FileUtils.readFileToString(file, charset);
 		
 		FileOutputStream fos = FileUtils.openOutputStream(outputFile);
 		OutputStreamWriter osw = new OutputStreamWriter(fos);
@@ -125,7 +138,7 @@ public class BufferedFile
 	 */
 	public boolean contains(String regex) throws FileNotFoundException, IOException
 	{
-		if(contents == null) contents = FileUtils.readFileToString(file, Charsets.UTF_8);
+		if(contents == null) contents = FileUtils.readFileToString(file, charset);
 
 		// We don't need a complete match, so there may be any text on either
 		// side of the regex. The (?m) enables multi-line mode (so that `^` and
