@@ -104,13 +104,14 @@ public class BufferedFile
 	 */
 	public void write(File outputFile) throws FileNotFoundException, IOException
 	{
+		if(contents == null) contents = FileUtils.readFileToString(file);
+		
 		FileOutputStream fos = FileUtils.openOutputStream(outputFile);
 		OutputStreamWriter osw = new OutputStreamWriter(fos);
 		BufferedWriter writer = new BufferedWriter(osw);
 		
 		if(prependText != null) writer.write(prependText + "\n");
 		
-		if(contents == null) contents = readFile();
 		writer.write(contents);
 
 		if(appendText != null) writer.write("\n" + appendText);
@@ -129,34 +130,13 @@ public class BufferedFile
 	 */
 	public boolean contains(String regex) throws FileNotFoundException, IOException
 	{
-		if(contents == null) contents = readFile();
+		if(contents == null) contents = FileUtils.readFileToString(file);
 
 		// We don't need a complete match, so there may be any text on either
 		// side of the regex. The (?m) enables multi-line mode (so that `^` and
 		// `$` can match beginning and end of lines) and the (?s) allows the dot
 		// to match new lines.
 		return contents.matches("(?m)(?s).*" + regex + ".*");
-	}
-	
-	/**
-	 * Reads the file into a single string.
-	 * @return The contents of the file.
-	 * @throws FileNotFoundException File does not exist.
-	 * @throws IOException File could not be read.
-	 */
-	private String readFile() throws FileNotFoundException, IOException
-	{
-		List<String> lines = CharStreams.readLines(new FileReader(file));
-		
-		String allLines = "";
-		for(String line : lines)
-		{
-			allLines += line + "\n";
-		}
-		
-		// No trailing new line -- make sure that we read in content and that the
-		// file isn't just empty
-		return allLines.substring(0, (allLines.length() > 0 ? allLines.length() - 1 : 0));
 	}
 	
 	@Override

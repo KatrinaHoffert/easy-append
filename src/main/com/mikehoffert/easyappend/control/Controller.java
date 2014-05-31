@@ -154,7 +154,14 @@ public class Controller implements Observable
 			}
 		
 			File outputFile = determineFileLocation(file.getFile(), commonPath, location);
-			messageAllObservers("File will be written to: " + outputFile.toString(), 1);
+			
+			// Only print out path info if we specified an alternative location to
+			// write to
+			if(location != null)
+			{
+				messageAllObservers("File will be written to: " + outputFile.toString(), 1);
+			}
+			
 			if(!dryRun) file.write(outputFile);
 			
 			messageAllObservers("File written.", 1);
