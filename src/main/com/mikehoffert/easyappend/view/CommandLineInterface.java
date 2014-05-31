@@ -3,6 +3,10 @@ package com.mikehoffert.easyappend.view;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Scanner;
@@ -56,6 +60,11 @@ public class CommandLineInterface implements Observer
 	 */
 	private static boolean testing = false;
 	
+	/**
+	 * The charset to use for all files. Defaults to UTF-8.
+	 */
+	private Charset charset = StandardCharsets.UTF_8;
+	
 	public static void main(String[] args)
 	{
 		CommandLineInterface cli = new CommandLineInterface();
@@ -107,6 +116,29 @@ public class CommandLineInterface implements Observer
 			if(!filesOnly && args[i].equals("--append"))
 			{
 				i = createTextAddition(args, i, false);
+			}
+			else if(!filesOnly && args[i].startsWith("--charset"))
+			{
+				String[] charsetString = args[i].split("=");
+				
+				if(charsetString.length > 0)
+				{
+					try
+					{
+						// Set the charset, if it exists
+						charset = Charset.forName(charsetString[1]);
+						controller.setCharset(charset);
+					}
+					catch(IllegalArgumentException e)
+					{
+						System.err.println("The supplied charset does not exist.");
+						malformedArguments = true;
+					}
+				}
+				else
+				{
+					malformedArguments = true;
+				}
 			}
 			else if(!filesOnly && args[i].equals("--dry-run"))
 			{

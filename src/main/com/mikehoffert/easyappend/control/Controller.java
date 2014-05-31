@@ -3,6 +3,8 @@ package com.mikehoffert.easyappend.control;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -43,11 +45,18 @@ public class Controller implements Observable
 	private Path location = null;
 	
 	/**
+	 * The charset that all files are presumed to be using. Will default to
+	 * UTF-8 unless otherwise specified.
+	 */
+	private Charset charset = StandardCharsets.UTF_8;
+	
+	/**
 	 * Adds a new file to the list of files to (potentially) modify.
 	 * @param file The file to add.
 	 */
 	public void addFile(BufferedFile file)
 	{
+		file.setCharset(charset);
 		files.add(file);
 	}
 	
@@ -59,6 +68,15 @@ public class Controller implements Observable
 	public void addText(TextAddition addition)
 	{
 		additions.add(addition);
+	}
+	
+	/**
+	 * Sets the charset (encoding) that will be used for all files.
+	 * @param charset The charset to use.
+	 */
+	public void setCharset(Charset charset)
+	{
+		this.charset = charset;
 	}
 	
 	@Override
