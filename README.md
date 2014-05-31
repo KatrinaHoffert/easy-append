@@ -71,8 +71,15 @@ These commands can be in any order.
 
 ##Installation
 
-Coming soon. For now, the project requires Eclipse, Maven, and Eclipse's m2e
-plugin to be run.
+This program requires Maven. Installation is as simple as running `mvn install`
+in the directory with the `pom.xml` file, and then using a command such as the
+one below to run the program.
+
+```bash
+java -jar target/easy-append-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+```
+
+Obviously replacing the path to the file with the output of `mvn install`.
 
 ##Examples
 
