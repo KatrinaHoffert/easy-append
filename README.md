@@ -70,11 +70,15 @@ plugin to be run.
 
 ##Examples
 
+###Simple addition
+
 Prepend and append plain some text to files:
 
 ```bash
 --prepend "prepended text" --append "appended text" file1.txt file2.txt
 ```
+
+###Using conditionals
 
 Prepend text if there is a line containing just a number:
 
@@ -87,6 +91,8 @@ The inverse of above (prepending if there is no such line):
 ```bash
 --prepend --contains="^[0-9]+$" --invert "prepended text" file.txt
 ```
+
+###Stacking additions
 
 Multiple text additions stack. So if we have a file, `file.txt`, that contains:
 
@@ -113,12 +119,16 @@ B
 C
 ```
 
+###Storing additions in files
+
 We could obtain the text to be added from a file instead of specifying it as an
 argument. Helpful for large amounts of text:
 
 ```bash
 --prepend --file=prepend_text.txt file.txt
 ```
+
+###Specifying an alternative location to place files
 
 Also useful is the ability to specify a location to save the output files. If
 this alternative location is not specified, the original files will be
