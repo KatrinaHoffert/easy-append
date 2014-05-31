@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import com.mikehoffert.easyappend.control.Controller;
 import com.mikehoffert.easyappend.control.Message;
 import com.mikehoffert.easyappend.control.Observer;
@@ -42,6 +44,12 @@ public class CommandLineInterface implements Observer
 	 * Whether or not to print out additional information.
 	 */
 	private boolean verbose = false;
+	
+	/**
+	 * If true, adding a folder to the file list will add all files inside that
+	 * folder.
+	 */
+	private boolean recursiveMode = false;
 	
 	/**
 	 * True if running a test and program shouldn't exit (even if error occurred).
@@ -130,6 +138,10 @@ public class CommandLineInterface implements Observer
 			{
 				displayHelp();
 			}
+			else if(!filesOnly && (args[i].equals("--recursive") || args[i].equals("-r")))
+			{
+				recursiveMode = true;
+			}
 			else if(!filesOnly && args[i].equals("--"))
 			{
 				// Symbolizes that all further tokens must be file names
@@ -137,7 +149,38 @@ public class CommandLineInterface implements Observer
 			}
 			else
 			{
-				controller.addFile(new BufferedFile(new File(args[i])));
+				File file = new File(args[i]);
+				if(file.isFile())
+				{
+					controller.addFile(new BufferedFile(file));
+				}
+				else if(file.isDirectory())
+				{
+					// We only allow specifying directories if recursive mode is
+					// on. This is a safety feature to prevent typos (etc) from
+					// accidentally modifying a large number of files.
+					if(recursiveMode)
+					{
+						Collection<File> contents = FileUtils.listFiles(file, null, true);
+						for(File content : contents)
+						{
+							controller.addFile(new BufferedFile(content));
+						}
+					}
+					else
+					{
+						System.err.println("In order to add directories, `--recursive`" +
+								" must be enabled.");
+						exitStatus = 5;
+						exit();
+					}
+				}
+				else
+				{
+					System.err.println("One or more of the file(s) to modify do not exist.");
+					exitStatus = 2;
+					exit();
+				}
 			}
 			
 			if(malformedArguments)
