@@ -38,6 +38,9 @@ they must appear). All except the `--prepend`/`--append` are optional.
 * `--invert` - If this flag is present, the regex is inverted and the file must
                *not* contain the regex to have the text addition applied.
 
+* `--same-line` - If this flag is present, the text addition will be done on the
+                  same line instead of putting it on its own line (the default).
+
 * `--file` - In the form of `--file=<path>`, where path is the path to some
              file that contains the text for this text addition. Only one of
              `--file` or `<text to add>` (at the end of the block) may appear.
