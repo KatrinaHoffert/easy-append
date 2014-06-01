@@ -65,7 +65,7 @@ public class BufferedFile
 	 * not prepend anything.
 	 * @param prependText The text.
 	 */
-	public void setPrependText(String prependText)
+	public void setPrependText(String prependText, boolean sameLine)
 	{
 		// Case for overwriting existing text with null
 		if(prependText == null)
@@ -75,12 +75,14 @@ public class BufferedFile
 		// Case for adding to existing text
 		if(this.prependText != null)
 		{
-			this.prependText += prependText + "\n";
+			this.prependText += prependText;
+			if(!sameLine) this.prependText += "\n";
 		}
 		// Case for setting text the first time
 		else
 		{
-			this.prependText = prependText + "\n";
+			this.prependText = prependText;
+			if(!sameLine) this.prependText += "\n";
 		}
 	}
 
@@ -90,7 +92,7 @@ public class BufferedFile
 	 * not append anything.
 	 * @param appendText The text.
 	 */
-	public void setAppendText(String appendText)
+	public void setAppendText(String appendText, boolean sameLine)
 	{
 		// Same cases as in `setPrependText(String)`.
 		if(appendText == null)
@@ -99,11 +101,19 @@ public class BufferedFile
 		}
 		if(this.appendText != null)
 		{
-			this.appendText += "\n" + appendText;
+			if(!sameLine) this.appendText += "\n";
+			this.appendText += appendText;
 		}
 		else
 		{
-			this.appendText = "\n" + appendText;
+			if(sameLine)
+			{
+				this.appendText = appendText;
+			}
+			else
+			{
+				this.appendText = "\n" + appendText;
+			}
 		}
 	}
 	

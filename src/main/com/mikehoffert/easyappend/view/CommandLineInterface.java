@@ -251,6 +251,7 @@ public class CommandLineInterface implements Observer
 		String text = null;
 		String contains = null;
 		boolean inverted = false;
+		boolean sameLine = false;
 		String textAdditionFile = null;
 		
 		// Determine what other arguments are set for this block
@@ -265,6 +266,12 @@ public class CommandLineInterface implements Observer
 		if(i + 1 < args.length && args[i + 1].equals("--invert"))
 		{
 			inverted = true;
+			i++;
+		}
+		
+		if(i + 1 < args.length && args[i + 1].equals("--same-line"))
+		{
+			sameLine = true;
 			i++;
 		}
 		
@@ -284,6 +291,7 @@ public class CommandLineInterface implements Observer
 		{
 			try
 			{
+				// TODO: Bug
 				text = FileUtils.readFileToString(new File(textAdditionFile), Charsets.UTF_8);
 			}
 			catch(IOException e)
@@ -298,7 +306,7 @@ public class CommandLineInterface implements Observer
 			malformedArguments = true;
 		}
 		
-		controller.addText(new TextAddition(text, contains, inverted, prepend));
+		controller.addText(new TextAddition(text, contains, inverted, prepend, sameLine));
 		
 		return i;
 	}

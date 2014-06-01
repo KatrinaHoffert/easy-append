@@ -26,6 +26,12 @@ public class TextAddition
 	 * If true, prepends the text. If false, appends.
 	 */
 	private boolean prepend;
+	
+	/**
+	 * If true, text is on the same line as an existing one. If false, the
+	 * addition is placed on its own line.
+	 */
+	private boolean sameLine;
 
 	/**
 	 * Groups properties of adding text.
@@ -36,12 +42,14 @@ public class TextAddition
 	 * NOT contain the regex.
 	 * @param prepend If true, prepends the text. If false, appends.
 	 */
-	public TextAddition(String text, String contains, boolean inverted, boolean prepend)
+	public TextAddition(String text, String contains, boolean inverted,
+			boolean prepend, boolean sameLine)
 	{
 		this.text = text;
 		this.contains = contains;
 		this.inverted = inverted;
 		this.prepend = prepend;
+		this.sameLine = sameLine;
 	}
 	
 	public String getText()
@@ -82,5 +90,15 @@ public class TextAddition
 	public void setPrepend(boolean prepend)
 	{
 		this.prepend = prepend;
+	}
+
+	public boolean isSameLine()
+	{
+		return sameLine;
+	}
+	
+	public void setSameLine(boolean sameLine)
+	{
+		this.sameLine = sameLine;
 	}
 }

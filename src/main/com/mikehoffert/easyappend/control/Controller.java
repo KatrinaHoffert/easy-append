@@ -160,12 +160,12 @@ public class Controller implements Observable
 				{
 					if(addition.isPrepend())
 					{
-						file.setPrependText(addition.getText());
+						file.setPrependText(addition.getText(), addition.isSameLine());
 						messageAllObservers("Text will be prepended.", 2);
 					}
 					else
 					{
-						file.setAppendText(addition.getText());
+						file.setAppendText(addition.getText(), addition.isSameLine());
 						messageAllObservers("Text will be appended.", 2);
 					}
 				}

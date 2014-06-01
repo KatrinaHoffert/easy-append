@@ -56,10 +56,10 @@ public class TestController
 		
 		controller.writeFiles();
 		
-		verify(file1).setPrependText("foo");
-		verify(file1).setAppendText("bar");
+		verify(file1).setPrependText("foo", false);
+		verify(file1).setAppendText("bar", false);
 		
-		verify(file2).setPrependText("foo");
-		verify(file2, never()).setAppendText("bar");
+		verify(file2).setPrependText("foo", false);
+		verify(file2, never()).setAppendText("bar", false);
 	}
 }

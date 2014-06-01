@@ -54,7 +54,7 @@ public class TestBufferedFile
 		File output = folder.newFile();
 		
 		// Prepend the first line of content array
-		bf.setPrependText(content[0]);
+		bf.setPrependText(content[0], false);
 		bf.write(output);
 		
 		List<String> lines = CharStreams.readLines(new FileReader(output));
@@ -69,7 +69,7 @@ public class TestBufferedFile
 		File output = folder.newFile();
 		
 		// Prepend the last line of content array
-		bf.setAppendText(content[content.length - 1]);
+		bf.setAppendText(content[content.length - 1], false);
 		bf.write(output);
 		
 		List<String> lines = CharStreams.readLines(new FileReader(output));
@@ -85,8 +85,8 @@ public class TestBufferedFile
 		
 		// Prepend and append the first and last line of content array,
 		// respectively
-		bf.setPrependText(content[0]);
-		bf.setAppendText(content[content.length - 1]);
+		bf.setPrependText(content[0], false);
+		bf.setAppendText(content[content.length - 1], false);
 		bf.write(output);
 		
 		List<String> lines = CharStreams.readLines(new FileReader(output));
