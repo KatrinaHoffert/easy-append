@@ -182,7 +182,7 @@ public class Controller implements Observable
 			
 			if(!dryRun) file.write(outputFile);
 			
-			messageAllObservers("File written.", 1);
+			if(!dryRun) messageAllObservers("File written.", 1);
 		}
 	}
 	
