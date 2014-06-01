@@ -74,7 +74,14 @@ These commands can be in any order.
 
 ##Installation
 
-This program requires Maven. Installation is as simple as running `mvn install`
+The easiest way to obtain this program is through GitHub's releases, where you
+can obtain a download to a compiled JAR (removing the need to do the compilation
+yourself). That download is also minimalistic -- it only includes the necessary
+files. The releases also include shell and batch scripts for running the
+program.
+
+Alternatively, if you download the source code (eg, by cloning this repository),
+this program requires Maven. Installation is as simple as running `mvn install`
 in the directory with the `pom.xml` file, and then using a command such as the
 one below to run the program.
 
@@ -82,7 +89,8 @@ one below to run the program.
 java -jar target/easy-append-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-Obviously replacing the path to the file with the output of `mvn install`.
+Obviously replacing the path to the file with the output of `mvn install` (the
+created JAR should be in a created `target` directory).
 
 ##Examples
 
@@ -245,3 +253,9 @@ Working on file test_2.txt
       File does contain the regex.
       Text will be appended.
 ```
+
+##Licensing
+
+Easy Append is licensed under the GPL v3, with the exception of
+`view.TextWrapper`, which is licensed as CC-BY-SA. See the top of that file for
+more details.
