@@ -167,7 +167,7 @@ We could modify these and tell Easy Append to place the output in `C:\output`
 with:
 
 ```bash
---location="C:\output" --prepend "X" C:\a\b\file.txt C:\a\file.txt F:\a\file.txt
+--location="C:\output" --prepend "X" "C:\a\b\file.txt" "C:\a\file.txt" "F:\a\file.txt"
 ```
 
 After running this, the contents of `C:\output` will be:
