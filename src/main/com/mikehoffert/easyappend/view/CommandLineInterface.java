@@ -291,8 +291,7 @@ public class CommandLineInterface implements Observer
 		{
 			try
 			{
-				// TODO: Bug
-				text = FileUtils.readFileToString(new File(textAdditionFile), Charsets.UTF_8);
+				text = FileUtils.readFileToString(new File(textAdditionFile), charset);
 			}
 			catch(IOException e)
 			{
