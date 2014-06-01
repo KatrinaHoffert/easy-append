@@ -196,3 +196,52 @@ C:\output\file.txt
 
 As we can see, the program determines the minimum number of directories we need
 to ensure there is no ambiguity.
+
+###Dry run
+
+To avoid issues that typos and such could raise, performing a dry run before
+making complicated text additions is a good idea. The `--dry-run` flag will
+cause the program to simulate what would happen without writing any files.
+
+Suppose we had two files, `test.txt` and `test_2.txt`, with the following
+content, respectfully:
+
+```
+A
+B
+C
+```
+
+```
+D
+E
+F
+```
+
+Then we run this command to perform some text additions (note that the slash
+is not part of the command -- it's handled by the shell to escape the line
+break in our command):
+
+```bash
+--dry-run --prepend --contains="A" "Text" --append --contains="D" "Text" \
+    test.txt test_2.txt
+```
+
+Would output (to standard output):
+
+```
+Working on file test.txt
+   Evaluating text addition #1 (prepend)
+      File does contain the regex.
+      Text will be prepended.
+   Evaluating text addition #2 (append)
+      File does not contain the regex.
+      Skipping because regex should be matched.
+Working on file test_2.txt
+   Evaluating text addition #1 (prepend)
+      File does not contain the regex.
+      Skipping because regex should be matched.
+   Evaluating text addition #2 (append)
+      File does contain the regex.
+      Text will be appended.
+```
