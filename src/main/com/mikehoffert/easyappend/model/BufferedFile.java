@@ -67,13 +67,20 @@ public class BufferedFile
 	 */
 	public void setPrependText(String prependText)
 	{
-		if(this.prependText != null && prependText != null)
-		{
-			this.prependText += "\n" + prependText;
-		}
-		else
+		// Case for overwriting existing text with null
+		if(prependText == null)
 		{
 			this.prependText = prependText;
+		}
+		// Case for adding to existing text
+		if(this.prependText != null)
+		{
+			this.prependText += prependText + "\n";
+		}
+		// Case for setting text the first time
+		else
+		{
+			this.prependText = prependText + "\n";
 		}
 	}
 
@@ -85,13 +92,18 @@ public class BufferedFile
 	 */
 	public void setAppendText(String appendText)
 	{
-		if(this.appendText != null && appendText != null)
+		// Same cases as in `setPrependText(String)`.
+		if(appendText == null)
+		{
+			this.appendText = appendText;
+		}
+		if(this.appendText != null)
 		{
 			this.appendText += "\n" + appendText;
 		}
 		else
 		{
-			this.appendText = appendText;
+			this.appendText = "\n" + appendText;
 		}
 	}
 	
@@ -118,11 +130,11 @@ public class BufferedFile
 		OutputStreamWriter osw = new OutputStreamWriter(fos);
 		BufferedWriter writer = new BufferedWriter(osw);
 		
-		if(prependText != null) writer.write(prependText + "\n");
+		if(prependText != null) writer.write(prependText);
 		
 		writer.write(contents);
 
-		if(appendText != null) writer.write("\n" + appendText);
+		if(appendText != null) writer.write(appendText);
 		
 		writer.close();
 	}
