@@ -2,6 +2,7 @@
 **Simple and fast bulk text additions**
 
 [![Build Status](https://travis-ci.org/MikeHoffert/easy-append.svg?branch=master)](https://travis-ci.org/MikeHoffert/easy-append)
+[![Coverage Status](https://coveralls.io/repos/MikeHoffert/easy-append/badge.png?branch=master)](https://coveralls.io/r/MikeHoffert/easy-append?branch=master)
 
 ##What is Easy Append?
 Easy Append is a program for performing bulk prepending and appending to text
